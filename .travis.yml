@@ -4,11 +4,11 @@ services:
   - 'docker'
 
 script:
-  - 'docker build -t $DOCKER_USERNAME:micropython-linux .'
+  - 'docker build -t $DOCKER_USERNAME:micropython-linux:$TRAVIS_BRANCH .'
 
 after_success:
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-  - docker push $DOCKER_USERNAME:micropython-linux
+  - docker push $DOCKER_USERNAME:micropython-linux:$TRAVIS_BRANCH
 
 # don't notify me when things fail
 notifications:

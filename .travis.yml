@@ -1,0 +1,16 @@
+sudo: 'required'
+
+services:
+  - 'docker'
+
+script:
+  - 'docker make'
+  - 'docker tag $DOCKER_USERNAME:micropython-linux'
+
+after_success:
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+  - docker push $DOCKER_USERNAME:micropython-linux
+
+# don't notify me when things fail
+notifications:
+  email: false

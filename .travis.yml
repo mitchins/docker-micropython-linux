@@ -10,6 +10,7 @@ script:
 after_success:
 - echo "Our tag is ${TAG_VER}"
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+- docker tag $DOCKER_USERNAME/micropython-linux:$TRAVIS_BRANCH
 - '[ -z "${TAG_VER}" ] && "Skip push as no tag" || docker push $DOCKER_USERNAME/micropython-linux:$TRAVIS_BRANCH'
 - '[ -z "${TAG_VER}" ] && "Skip push as no tag" || docker push $DOCKER_USERNAME/micropython-linux:$TAG_VER'
 notifications:

@@ -1,16 +1,15 @@
-sudo: 'required'
-
+sudo: required
 services:
-  - 'docker'
-
+- docker
 script:
-  - 'TAG_VER=$(git ls-remote --tags --refs git://github.com/micropython/micropython.git | awk -F/ '{ print $3 }' | tail -n 1)'
-  - 'curl -s https://hub.docker.com/v2/repositories/mitchins/micropython-linux/tags/ | grep -q '"name": "${TAG_VER}"' || docker build --build-arg TAG_VER=$TAG_VER -t $DOCKER_USERNAME/micropython-linux:$TRAVIS_BRANCH .'
-
+- TAG_VER=$(git ls-remote --tags --refs git://github.com/micropython/micropython.git
+  | awk -F/ '{ print $3 }' | tail -n 1)
+- curl -s https://hub.docker.com/v2/repositories/mitchins/micropython-linux/tags/
+  | grep -q \"${TAG_VER}\" || docker build --build-arg TAG_VER=$TAG_VER -t $DOCKER_USERNAME/micropython-linux:$TRAVIS_BRANCH
+  .
 after_success:
-  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-  - [ -z "${TAG_VER}" ] && docker push $DOCKER_USERNAME/micropython-linux:$TAG_VER
-
-# don't notify me when things fail
+- echo "Our tag is ${TAG_VER}"
+- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+- '[ -z "${TAG_VER}" ] && "Skip push as no tag" || docker push $DOCKER_USERNAME/micropython-linux:$TRAVIS_BRANCH'
 notifications:
   email: false

@@ -13,7 +13,7 @@ The image is based off the official Debian-slim (stretch) because it's fairly sl
 
 Providing you have access to Docker, you can run the latest version quite easily by:
 
-    docker run -t mitchins/docker-micropython-linux
+    docker run -t mitchins/micropython-linux
     MicroPython v1.9.4-403-g81e320ae on 2018-07-21; linux version
     Use Ctrl-D to exit, Ctrl-E for paste mode
     >>> ^C
@@ -30,5 +30,3 @@ To install something else, you can:
     Installing micropython-unittest 0.3.2 from https://files.pythonhosted.org/packages/9a/42/41057b8da94414a17f7028ee08035c3d945befebddc76d58988067ddaf0f/micropython-unittest-0.3.2.tar.gz
 
 That's about it, the goal is to maintain the latest and stable tagged versions so regressions can be tested as needed, or experimented features accessed.
-
-

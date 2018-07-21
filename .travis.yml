@@ -4,8 +4,7 @@ services:
   - 'docker'
 
 script:
-  - 'docker make'
-  - 'docker tag $DOCKER_USERNAME:micropython-linux'
+  - 'docker build $DOCKER_USERNAME:micropython-linux .'
 
 after_success:
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD

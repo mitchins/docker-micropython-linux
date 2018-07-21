@@ -5,7 +5,7 @@ script:
 - TAG_VER=$(git ls-remote --tags --refs git://github.com/micropython/micropython.git
   | awk -F/ '{ print $3 }' | tail -n 1)
 - curl -s https://hub.docker.com/v2/repositories/mitchins/micropython-linux/tags/
-  | grep -q \"${TAG_VER}\" || docker build --build-arg TAG_VER=$TAG_VER -t $DOCKER_USERNAME/micropython-linux:$TRAVIS_BRANCH
+  | grep -q \"${TAG_VER}\" || docker build --build-arg TAG_VER=$TAG_VER -t $DOCKER_USERNAME/micropython-linux:$TAG_VER
   .
 after_success:
 - echo "Our tag is ${TAG_VER}"

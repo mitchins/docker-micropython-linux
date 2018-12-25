@@ -20,7 +20,7 @@ Providing you have access to Docker, you can run the latest version quite easily
 
 Tags are available on the Docker Hub listing
 
-If you check the Dockerfile, you will see it starts up micropython automatically which is stored in /usr/loca/bin/micropython
+If you check the Dockerfile, you will see it starts up micropython automatically which is stored in /usr/local/bin/micropython
 
 To install something else, you can:
 

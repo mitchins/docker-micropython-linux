@@ -13,14 +13,14 @@ The image is based off the official Debian-slim (stretch) because it's fairly sl
 
 Providing you have access to Docker, you can run the latest version quite easily by:
 
-    docker run -t mitchins/micropython-linux
+    docker run -it mitchins/micropython-linux
     MicroPython v1.9.4-403-g81e320ae on 2018-07-21; linux version
     Use Ctrl-D to exit, Ctrl-E for paste mode
     >>> ^C
 
 Tags are available on the Docker Hub listing
 
-If you check the Dockerfile, you will see it starts up micropython automatically which is stored in /usr/loca/bin/micropython
+If you check the Dockerfile, you will see it starts up micropython automatically which is stored in /usr/local/bin/micropython
 
 To install something else, you can:
 

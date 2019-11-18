@@ -8,6 +8,9 @@ RUN apt-get update && \
     cd micropython && \
     git checkout ${TAG_VER} && \
     git submodule update --init && \
+    cd mpy-cross && \
+    make && \
+    cd .. && \
     cd ports/unix && \
     make axtls && \
     make && \

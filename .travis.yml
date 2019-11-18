@@ -3,7 +3,7 @@ services:
 - docker
 script:
 - TAG_VER=$(git ls-remote --tags --refs git://github.com/micropython/micropython.git
-  | awk -F/ '{ print $3 }' ) | sort -t v -V -k 2,2 | tail -n 1)
+  | awk -F/ '{ print $3 }' | sort -t v -V -k 2,2 |  -n 1)
 - curl -s https://hub.docker.com/v2/repositories/mitchins/micropython-linux/tags/
   | grep -q \"${TAG_VER}\" || docker build --build-arg TAG_VER=$TAG_VER -t $DOCKER_USERNAME/micropython-linux:$TRAVIS_BRANCH -t $DOCKER_USERNAME/micropython-linux:$TAG_VER
   .

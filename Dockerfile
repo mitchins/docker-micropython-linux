@@ -6,6 +6,9 @@ RUN apt-get update && \
     git clone https://github.com/micropython/micropython.git && \
     cd micropython && \
     git submodule update --init && \
+    cd mpy-cross && \
+    make && \
+    cd .. && \
     cd ports/unix && \
     make axtls && \
     make && \

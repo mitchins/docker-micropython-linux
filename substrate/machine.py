@@ -20,23 +20,23 @@ class Pin:
     _levels = {}      # id -> level (shared GPIO state, like the real chip)
     _instances = {}   # id -> Pin (a given GPIO maps to one logical pin)
 
-    def __new__(cls, id, *args, **kwargs):
-        if not isinstance(id, int) or id < 0:
+    def __new__(cls, pin_id, *args, **kwargs):
+        if not isinstance(pin_id, int) or pin_id < 0:
             raise ValueError("invalid pin")
-        inst = cls._instances.get(id)
+        inst = cls._instances.get(pin_id)
         if inst is None:
             inst = object.__new__(cls)
-            inst.id = id
+            inst.id = pin_id
             inst.mode = None
             inst.pull = -1
             inst.calls = []
-            cls._instances[id] = inst
-            cls._levels.setdefault(id, 0)
+            cls._instances[pin_id] = inst
+            cls._levels.setdefault(pin_id, 0)
         if args or kwargs:
             inst._configure(args, kwargs)
         return inst
 
-    def __init__(self, id, *args, **kwargs):
+    def __init__(self, pin_id=None, *args, **kwargs):
         pass
 
     def _configure(self, args, kwargs):

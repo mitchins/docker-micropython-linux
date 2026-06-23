@@ -64,6 +64,9 @@ class WLAN:
             cls._instances[interface] = inst
         return inst
 
+    def __init__(self, interface=STA_IF):
+        pass
+
     # ---- test control surface (NOT present on real hardware) ----------------
     def reset(self):
         self._active = False
@@ -126,10 +129,11 @@ class WLAN:
             raise OSError("STA must be active")
         return list(self._scan)
 
-    def connect(self, ssid=None, key=None, **kwargs):
-        bssid = kwargs.get("bssid")
+    def connect(self, ssid=None, key=None, *, bssid=None):
+        if bssid is not None and not isinstance(bssid, (bytes, bytearray)):
+            raise ValueError("bad bssid type")
         if bssid is not None and len(bssid) != 6:
-            raise ValueError(None)
+            raise ValueError("bad bssid len")
         self._record("connect", (ssid, key), {"bssid": bssid})
         self._connect_ssid = ssid
         self._connect_bssid = bssid
@@ -173,6 +177,8 @@ class WLAN:
         if args:
             self._config["ifconfig"] = args[0]
             return None
+        if "ifconfig" in self._config:
+            return self._config["ifconfig"]
         return _CONNECTED_IFCONFIG if self._connected else _DISCONNECTED_IFCONFIG
 
     def config(self, *args, **kwargs):

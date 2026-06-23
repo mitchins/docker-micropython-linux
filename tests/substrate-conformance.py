@@ -110,6 +110,7 @@ def case_connect_contract_and_spy():
     assert sta.last_call("connect").kwargs["bssid"] == b"\x01\x02\x03\x04\x05\x06"
     # bssid must be exactly 6 bytes
     assert _raises(ValueError, lambda: sta.connect("Net", bssid=b"\x01\x02"))
+    assert _raises(TypeError, lambda: sta.connect("Net", foo="bar"))
 
 
 def case_status_contract():
@@ -148,6 +149,9 @@ def case_ifconfig_and_config():
     assert sta.config("ssid") == "Office"
     sta.config(essid="ap-name")
     assert sta.config("essid") == "ap-name"
+    custom = ("10.0.0.2", "255.255.255.0", "10.0.0.1", "1.1.1.1")
+    assert sta.ifconfig(custom) is None
+    assert sta.ifconfig() == custom
 
 
 # --- machine.Pin -------------------------------------------------------------
@@ -178,6 +182,16 @@ def case_pin_external_input_and_isolation():
     assert machine.Pin(0).value() == 0                     # reset_all clears GPIO state
 
 
+def case_pin_invalid_id():
+    machine.reset_all()
+    assert _raises(ValueError, lambda: machine.Pin(-1))
+
+
+def case_pin_irq_present():
+    machine.reset_all()
+    assert hasattr(machine.Pin(0, machine.Pin.IN), "irq")
+
+
 def main():
     cases = [
         ("network_constants", case_network_constants),
@@ -188,6 +202,8 @@ def main():
         ("ifconfig_and_config", case_ifconfig_and_config),
         ("pin_constants_and_io", case_pin_constants_and_io),
         ("pin_external_input_and_isolation", case_pin_external_input_and_isolation),
+        ("pin_invalid_id", case_pin_invalid_id),
+        ("pin_irq_present", case_pin_irq_present),
     ]
     for name, fn in cases:
         _run_case(name, fn)

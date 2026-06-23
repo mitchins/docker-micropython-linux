@@ -79,8 +79,8 @@ def get_logger(name):
     return logger
 
 
-def getLogger(name):
-    return get_logger(name)
+def getLogger(name=None):
+    return get_logger(name or "root")
 
 
 def info(msg, *args):
@@ -89,6 +89,25 @@ def info(msg, *args):
 
 def debug(msg, *args):
     get_logger("root").debug(msg, *args)
+
+
+def warning(msg, *args):
+    get_logger("root").warning(msg, *args)
+
+
+warn = warning
+
+
+def error(msg, *args):
+    get_logger("root").error(msg, *args)
+
+
+def critical(msg, *args):
+    get_logger("root").critical(msg, *args)
+
+
+def exception(msg, *args):
+    get_logger("root").exception(msg, *args)
 
 
 def basic_config(level=INFO, filename=None, stream=None, format=None):  # noqa: A002

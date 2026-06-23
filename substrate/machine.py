@@ -21,6 +21,8 @@ class Pin:
     _instances = {}   # id -> Pin (a given GPIO maps to one logical pin)
 
     def __new__(cls, id, *args, **kwargs):
+        if not isinstance(id, int) or id < 0:
+            raise ValueError("invalid pin")
         inst = cls._instances.get(id)
         if inst is None:
             inst = object.__new__(cls)
@@ -33,6 +35,9 @@ class Pin:
         if args or kwargs:
             inst._configure(args, kwargs)
         return inst
+
+    def __init__(self, id, *args, **kwargs):
+        pass
 
     def _configure(self, args, kwargs):
         mode = args[0] if len(args) >= 1 else kwargs.get("mode")
@@ -74,6 +79,10 @@ class Pin:
 
     def init(self, *args, **kwargs):
         self._configure(args, kwargs)
+        return None
+
+    def irq(self, *args, **kwargs):
+        self.calls.append(("irq", args, kwargs))
         return None
 
     # ---- test control surface (NOT present on real hardware) ----------------

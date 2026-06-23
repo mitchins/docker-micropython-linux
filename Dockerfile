@@ -7,6 +7,7 @@ RUN apt-get update && \
       build-essential \
       ca-certificates \
       git \
+      libffi8 \
       libffi-dev \
       pkg-config \
       python3 \
@@ -21,7 +22,6 @@ RUN apt-get update && \
     && apt-get purge --auto-remove -y \
       build-essential \
       git \
-      libffi-dev \
       pkg-config \
       python3 \
     && rm -rf /var/lib/apt/lists/*

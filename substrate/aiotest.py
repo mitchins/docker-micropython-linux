@@ -30,9 +30,15 @@ def run_iterations(coro_factory, iterations, asyncio_module):
     for name in ("sleep", "sleep_ms"):
         if hasattr(asyncio_module, name):
             saved[name] = getattr(asyncio_module, name)
+    real_sleep = saved.get("sleep")
+    real_sleep_ms = saved.get("sleep_ms")
 
     async def fast_sleep(*_args, **_kwargs):
         counter["n"] += 1
+        if real_sleep is not None:
+            await real_sleep(0)
+        elif real_sleep_ms is not None:
+            await real_sleep_ms(0)
         if counter["n"] >= iterations:
             raise _StopLoop()
 
